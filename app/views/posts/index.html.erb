@@ -1,0 +1,25 @@
+<p class="text-green-600 font-semibold mb-4"><%= notice %></p>
+
+<% content_for :title, "Posts" %>
+
+<div class="max-w-4xl mx-auto">
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-4xl font-bold text-gray-800">My Blog</h1>
+    <%= link_to "New post", new_post_path, class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition" %>
+  </div>
+
+  <div id="posts" class="space-y-6">
+    <% @posts.each do |post| %>
+      <article class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
+        <div class="flex items-start justify-between">
+          <div class="flex-1">
+            <%= render post %>
+          </div>
+        </div>
+        <div class="mt-4">
+          <%= link_to "Read more →", post, class: "text-blue-600 hover:text-blue-800 font-medium" %>
+        </div>
+      </article>
+    <% end %>
+  </div>
+</div>

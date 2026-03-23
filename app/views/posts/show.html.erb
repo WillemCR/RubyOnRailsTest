@@ -1,0 +1,22 @@
+<p class="text-green-600 font-semibold mb-4"><%= notice %></p>
+
+<% content_for :title, @post.title %>
+
+<div class="max-w-2xl mx-auto">
+  <div class="mb-6">
+    <%= link_to "← Back to posts", posts_path, class: "text-blue-600 hover:text-blue-800 font-medium" %>
+  </div>
+  
+  <article class="bg-white rounded-lg shadow-md p-8">
+    <div class="mb-6">
+      <%= render @post %>
+    </div>
+    
+    <div class="flex items-center justify-between pt-6 border-t border-gray-200">
+      <div class="flex space-x-4">
+        <%= link_to "Edit", edit_post_path(@post), class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition" %>
+        <%= button_to "Delete", @post, method: :delete, class: "bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition cursor-pointer", data: { confirm: "Are you sure?" } %>
+      </div>
+    </div>
+  </article>
+</div>
