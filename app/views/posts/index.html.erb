@@ -1,25 +1,40 @@
-<p class="text-green-600 font-semibold mb-4"><%= notice %></p>
-
 <% content_for :title, "Posts" %>
 
-<div class="max-w-4xl mx-auto">
-  <div class="flex justify-between items-center mb-8">
-    <h1 class="text-4xl font-bold text-gray-800">My Blog</h1>
-    <%= link_to "New post", new_post_path, class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition" %>
-  </div>
+<div class="mb-8">
+  <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">All Posts</h1>
+  <p class="mt-2 text-gray-500">Browse all blog posts, newest first.</p>
+</div>
 
-  <div id="posts" class="space-y-6">
+<% if @posts.any? %>
+  <div id="posts" class="grid gap-6 sm:grid-cols-2">
     <% @posts.each do |post| %>
-      <article class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
-        <div class="flex items-start justify-between">
-          <div class="flex-1">
-            <%= render post %>
+      <%= link_to post, class: "group block" do %>
+        <article class="bg-white rounded-xl border border-gray-200 p-6 h-full flex flex-col transition hover:shadow-lg hover:border-indigo-300">
+          <div class="flex items-center gap-2 mb-3">
+            <% if post.published? %>
+              <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700">Published</span>
+            <% else %>
+              <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-700">Draft</span>
+            <% end %>
+            <time class="text-xs text-gray-400" datetime="<%= post.created_at.iso8601 %>">
+              <%= post.created_at.strftime("%d %b %Y") %>
+            </time>
           </div>
-        </div>
-        <div class="mt-4">
-          <%= link_to "Read more →", post, class: "text-blue-600 hover:text-blue-800 font-medium" %>
-        </div>
-      </article>
+
+          <h2 class="text-lg font-bold text-gray-900 group-hover:text-indigo-600 transition mb-2 line-clamp-2"><%= post.title %></h2>
+          <p class="text-sm text-gray-500 line-clamp-3 flex-1"><%= truncate(post.content, length: 180) %></p>
+
+          <span class="mt-4 inline-flex items-center text-sm font-medium text-indigo-600 group-hover:text-indigo-800 transition">
+            Read more
+            <svg class="ml-1 w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </span>
+        </article>
+      <% end %>
     <% end %>
   </div>
-</div>
+<% else %>
+  <div class="text-center py-16 bg-white rounded-xl border border-dashed border-gray-300">
+    <p class="text-gray-400 text-lg mb-4">No posts yet.</p>
+    <%= link_to "Write your first post", new_post_path, class: "inline-flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 px-5 rounded-lg transition shadow-sm" %>
+  </div>
+<% end %>

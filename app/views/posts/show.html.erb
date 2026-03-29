@@ -1,22 +1,43 @@
-<p class="text-green-600 font-semibold mb-4"><%= notice %></p>
-
 <% content_for :title, @post.title %>
 
-<div class="max-w-2xl mx-auto">
+<div class="max-w-3xl mx-auto">
   <div class="mb-6">
-    <%= link_to "← Back to posts", posts_path, class: "text-blue-600 hover:text-blue-800 font-medium" %>
+    <%= link_to posts_path, class: "inline-flex items-center text-sm font-medium text-gray-500 hover:text-indigo-600 transition" do %>
+      <svg class="mr-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+      Back to posts
+    <% end %>
   </div>
-  
-  <article class="bg-white rounded-lg shadow-md p-8">
-    <div class="mb-6">
-      <%= render @post %>
-    </div>
-    
-    <div class="flex items-center justify-between pt-6 border-t border-gray-200">
-      <div class="flex space-x-4">
-        <%= link_to "Edit", edit_post_path(@post), class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition" %>
-        <%= button_to "Delete", @post, method: :delete, class: "bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition cursor-pointer", data: { confirm: "Are you sure?" } %>
+
+  <article class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+    <div class="px-8 pt-8 pb-6">
+      <div class="flex items-center gap-3 mb-4">
+        <% if @post.published? %>
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700">Published</span>
+        <% else %>
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-700">Draft</span>
+        <% end %>
+        <time class="text-sm text-gray-400" datetime="<%= @post.created_at.iso8601 %>">
+          <%= @post.created_at.strftime("%d %B %Y at %H:%M") %>
+        </time>
       </div>
+
+      <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight mb-6"><%= @post.title %></h1>
+
+      <div class="prose prose-gray max-w-none text-gray-700 leading-relaxed whitespace-pre-line">
+        <%= @post.content %>
+      </div>
+    </div>
+
+    <div class="bg-gray-50 border-t border-gray-200 px-8 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <%= link_to "Edit", edit_post_path(@post), class: "inline-flex items-center gap-1.5 text-sm font-medium bg-white border border-gray-300 hover:border-indigo-400 hover:text-indigo-600 text-gray-700 py-2 px-4 rounded-lg transition shadow-sm" %>
+        <%= button_to @post, method: :delete, class: "inline-flex items-center gap-1.5 text-sm font-medium bg-white border border-gray-300 hover:border-red-400 hover:text-red-600 text-gray-700 py-2 px-4 rounded-lg transition shadow-sm cursor-pointer", data: { turbo_confirm: "Are you sure you want to delete this post?" } do %>
+          Delete
+        <% end %>
+      </div>
+      <% if @post.updated_at > @post.created_at %>
+        <span class="text-xs text-gray-400">Updated <%= time_ago_in_words(@post.updated_at) %> ago</span>
+      <% end %>
     </div>
   </article>
 </div>

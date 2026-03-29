@@ -22,17 +22,42 @@
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
   </head>
 
-  <body class="bg-gray-50 min-h-screen">
-    <header class="bg-white shadow-sm">
-      <div class="container mx-auto px-4 py-4">
-        <h1 class="text-xl font-bold text-gray-800">
-          <%= link_to "My Blog", posts_path, class: "hover:text-blue-600 transition" %>
-        </h1>
+  <body class="bg-gray-50 min-h-screen flex flex-col">
+    <header class="bg-white border-b border-gray-200">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <div class="flex items-center gap-2">
+            <span class="text-2xl">✍️</span>
+            <%= link_to "My Blog", root_path, class: "text-xl font-bold text-gray-900 hover:text-indigo-600 transition" %>
+          </div>
+          <nav class="flex items-center gap-4">
+            <%= link_to "Posts", posts_path, class: "text-sm font-medium text-gray-600 hover:text-indigo-600 transition" %>
+            <%= link_to "New Post", new_post_path, class: "inline-flex items-center gap-1.5 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-lg transition shadow-sm" %>
+          </nav>
+        </div>
       </div>
     </header>
-    
-    <main class="container mx-auto mt-8 px-4 pb-8">
+
+    <main class="flex-1 max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10">
+      <% if notice.present? %>
+        <div class="mb-6 flex items-center gap-2 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-lg px-4 py-3 text-sm font-medium">
+          <span>✓</span>
+          <%= notice %>
+        </div>
+      <% end %>
+      <% if alert.present? %>
+        <div class="mb-6 flex items-center gap-2 bg-red-50 border border-red-200 text-red-800 rounded-lg px-4 py-3 text-sm font-medium">
+          <span>!</span>
+          <%= alert %>
+        </div>
+      <% end %>
       <%= yield %>
     </main>
+
+    <footer class="border-t border-gray-200 bg-white">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <p class="text-center text-sm text-gray-400">&copy; <%= Date.current.year %> My Blog &middot; Built with Ruby on Rails</p>
+      </div>
+    </footer>
   </body>
 </html>

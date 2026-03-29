@@ -1,10 +1,13 @@
 <%= form_with(model: post, class: "space-y-6") do |form| %>
   <% if post.errors.any? %>
-    <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-      <h2 class="text-red-800 font-semibold mb-2">
-        <%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:
-      </h2>
-      <ul class="list-disc list-inside text-red-700 text-sm">
+    <div class="bg-red-50 border border-red-200 rounded-xl p-4 mb-6">
+      <div class="flex items-center gap-2 mb-2">
+        <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <h2 class="text-red-800 font-semibold text-sm">
+          <%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:
+        </h2>
+      </div>
+      <ul class="list-disc list-inside text-red-700 text-sm ml-7">
         <% post.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
@@ -13,21 +16,21 @@
   <% end %>
 
   <div>
-    <%= form.label :title, class: "block text-sm font-medium text-gray-700 mb-1" %>
-    <%= form.text_field :title, class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>
+    <%= form.label :title, class: "block text-sm font-semibold text-gray-700 mb-1.5" %>
+    <%= form.text_field :title, placeholder: "Enter a title...", class: "w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-900 placeholder-gray-400 transition" %>
   </div>
 
   <div>
-    <%= form.label :content, class: "block text-sm font-medium text-gray-700 mb-1" %>
-    <%= form.textarea :content, rows: 6, class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-y" %>
+    <%= form.label :content, class: "block text-sm font-semibold text-gray-700 mb-1.5" %>
+    <%= form.textarea :content, rows: 10, placeholder: "Write your post content...", class: "w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-900 placeholder-gray-400 resize-y transition" %>
   </div>
 
-  <div class="flex items-center">
-    <%= form.checkbox :published, class: "h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" %>
-    <%= form.label :published, class: "ml-2 text-sm font-medium text-gray-700" %>
+  <div class="flex items-center gap-2.5">
+    <%= form.checkbox :published, class: "h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 cursor-pointer" %>
+    <%= form.label :published, "Publish this post", class: "text-sm font-medium text-gray-700 cursor-pointer select-none" %>
   </div>
 
-  <div>
-    <%= form.submit class: "w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition cursor-pointer" %>
+  <div class="pt-2">
+    <%= form.submit class: "w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 px-4 rounded-lg transition cursor-pointer shadow-sm" %>
   </div>
 <% end %>
